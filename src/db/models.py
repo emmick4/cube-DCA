@@ -1,10 +1,9 @@
 import enum
 from datetime import datetime
-from sqlalchemy import Column, String, Float, Enum, JSON, DateTime, Integer, BigInteger, Boolean
+from sqlalchemy import Column, String, Float, Enum, JSON, DateTime, Integer, BigInteger, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
-from .db import Base
 from sqlalchemy.orm import DeclarativeBase
-from cube.cube_types import OrderStatus
+from cube._cube_types import OrderStatus, Market
 
 
 class Base(DeclarativeBase):
@@ -38,7 +37,7 @@ class Order(Base):
     __tablename__ = "orders"
 
     id = Column(String, primary_key=True)  # orderId from exchange
-    user_trade_id = Column(String, nullable=False)
+    user_trade_id = Column(String, ForeignKey("user_trades.id"), nullable=False)
     symbol = Column(String, nullable=False)
     side = Column(String, nullable=False)  # Bid or Ask
     price = Column(Float, nullable=False)
@@ -76,6 +75,14 @@ class Order(Base):
 
     # Relationship with UserTrade
     user_trade = relationship("UserTrade", back_populates="orders")
+
+    def __init__(self, **kwargs):
+        if 'market' in kwargs:
+            market = kwargs.pop('market')
+            if isinstance(market, Market):
+                kwargs['market_id'] = market.market_id
+                kwargs['symbol'] = market.symbol
+        super().__init__(**kwargs)
 
 class OrderbookSnapshot(Base):
     __tablename__ = "orderbook_snapshots"

@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import Base, Order, UserTrade, UserTradeStatus
-from cube.cube_types import OrderStatus
+from db.models import Base, Order, UserTrade, UserTradeStatus
+from cube._cube_types import OrderStatus
 
 class Database:
     def __init__(self, db_url: str):
@@ -30,6 +30,21 @@ class Database:
 
     def update_order(self, order: Order):
         with self.get_db() as db:
-            db.query(Order).filter(Order.client_order_id == order.client_order_id).update(order.model_dump())
+            update_data = {k: v for k, v in order.__dict__.items() 
+                         if not k.startswith('_') and v is not None}
+            db.query(Order).filter(Order.client_order_id == order.client_order_id).update(update_data)
             db.commit()
 
+    def add_order(self, order: Order):
+        with self.get_db() as db:
+            db.add(order)
+            db.commit()
+
+    def commit(self):
+        with self.get_db() as db:
+            db.commit()
+
+    def update_user_trade(self, user_trade: UserTrade):
+        with self.get_db() as db:
+            db.query(UserTrade).filter(UserTrade.id == user_trade.id).update(user_trade.__dict__)
+            db.commit()
