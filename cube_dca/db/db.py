@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from db.models import Base, Order, UserTrade, UserTradeStatus
-from cube._cube_types import OrderStatus
+from cube_dca.db.models import Base, Order, UserTrade, UserTradeStatus
+from cube_dca.external.cube.types import OrderStatus
 
 class Database:
     def __init__(self, db_url: str):

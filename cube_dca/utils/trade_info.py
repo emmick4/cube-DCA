@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Dict, List, Optional, Any
 from sqlalchemy.orm import Session
 from sqlalchemy import func
-from db.models import UserTrade, Order, UserTradeStatus, OrderStatus
+from cube_dca.db.models import UserTrade, Order, UserTradeStatus, OrderStatus
 
 def get_trade_info(db: Session, trade_id: str) -> Optional[Dict[str, Any]]:
     """
@@ -87,7 +87,7 @@ def get_execution_stats(db: Session, trade_id: str) -> Dict[str, Any]:
     orders_count = len(orders)
     filled_orders_count = len(filled_orders)
     open_orders_count = len([o for o in orders if o.status == OrderStatus.OPEN])
-    canceled_orders_count = len([o for o in orders if o.status == OrderStatus.CANCELED])
+    canceled_orders_count = len([o for o in orders if o.status == OrderStatus.CANCELLED])
     rejected_orders_count = len([o for o in orders if o.status == OrderStatus.REJECTED])
     
     return {

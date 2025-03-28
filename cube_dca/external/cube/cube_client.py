@@ -7,9 +7,9 @@ import hashlib
 import httpx
 from datetime import datetime
 
-from db.models import Order
-from cube._cube_types import Market
-from services.market_manager import MarketManager
+from cube_dca.db.models import Order
+from cube_dca.external.cube.types import Market
+from cube_dca.utils.market_manager import MarketManager
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)

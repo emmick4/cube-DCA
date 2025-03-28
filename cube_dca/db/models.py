@@ -3,7 +3,7 @@ from datetime import datetime
 from sqlalchemy import Column, String, Float, Enum, JSON, DateTime, Integer, BigInteger, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import DeclarativeBase
-from cube._cube_types import OrderStatus, Market
+from cube_dca.external.cube.types import OrderStatus, Market
 
 
 class Base(DeclarativeBase):

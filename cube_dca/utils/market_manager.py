@@ -1,4 +1,4 @@
-from cube._cube_types import Market
+from cube_dca.external.cube.types import Market
 import json
 import os
 from typing import Dict, Optional
@@ -16,7 +16,7 @@ class MarketManager:
     
     def _load_markets(self):
         """Load all markets from markets.json"""
-        markets_file = os.path.join(os.path.dirname(__file__), '..', 'markets.json')
+        markets_file = os.path.join(os.path.dirname(__file__), '..', '..', 'config', 'markets.json')
         with open(markets_file, 'r') as f:
             markets_data = json.load(f)
             

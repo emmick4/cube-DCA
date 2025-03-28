@@ -1,6 +1,5 @@
-from cube import CubeClient
-from cube import cube_types
-from db.models import UserTrade, UserTradeStatus
+from cube_dca.external.cube.cube_client import CubeClient
+from cube_dca.db.models import UserTrade, UserTradeStatus
 
 class LiquidityMakerStrategy:
     name: str = "liquidity_maker"
