@@ -1,11 +1,29 @@
 # cube-DCA
 
-the main file sets up the db and cube client
+A simple trading bot for executing automated trading strategies on the Cube exchange.
 
-then the main loop starts
-    when a trade appears in the db, we spin up a corresponding worker
+## Overview
 
-    when an order status from cube diverges from the db state we sync
+The system works as follows:
+- The main file sets up the database and Cube client connection
+- The main loop monitors and manages trades:
+  - When a trade appears in the database, it spins up a corresponding worker
+  - When an order status from Cube diverges from the database state, it syncs them
 
-the strategy can be pretty arbitrary, for this we have a twap and pseudocode for a liquidity maker strategy
+## Strategies
+
+Two strategies are implemented:
+- **TWAP**: Time-Weighted Average Price strategy that splits trades over time
+- **Liquidity Maker**: Makes directional liquidity for a token pair (in development)
+
+## Setup
+
+1. Clone the repository
+2. Install dependencies: `pip install -r requirements.txt`
+3. Configure your API keys in `config/config.json`
+4. Run with: `python main.py`
+
+## API
+
+The system includes a REST API for managing trades. Use the `/trades` endpoint to create and monitor trades.
 
